@@ -38,10 +38,9 @@ for weights in weightsList:
 		xi = data.iloc[i].area
 		yi = data.iloc[i].price
 		h_theta = m*xi + b
-		sumation = sumation + (h_theta - yi)
+		sumation = sumation + (h_theta - yi)**2
 
-	# calculating cost
-	cost = (1/(2*n)) * (sumation**2)
+	cost = (1/(2*n)) * sumation
 	print('\n[+] m = ' + str(m) + ', b = ' + str(b))
 	print('[+] Cost function result --> ' + str(cost))
 
