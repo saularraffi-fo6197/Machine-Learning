@@ -17,6 +17,7 @@ with open('training_data.csv', 'w', newline='') as f:
 # read csv file
 df_train = pd.read_csv('training_data.csv')
 
+# printing data
 print('\nTraining Data')
 print(df_train)
 print('\n')
@@ -71,6 +72,7 @@ predictions = reg.predict(df_test)
 df_test['price'] = predictions
 df_test.to_csv('predictions.csv', index=False)
 
+# printing data
 print('\nPredictions')
 print(df_test)
 
