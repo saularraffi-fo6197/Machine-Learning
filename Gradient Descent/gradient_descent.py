@@ -1,51 +1,34 @@
+import numpy as np
 import matplotlib.pyplot as plt
-import numpy as np 
-import pandas as pd
-import csv
 
-def cost(data, theta0, theta1):
-	# theta0 is b
-	# theta1 is m
-	sumation = 0
-	n = len(data)
-	for i in range(n):
-		xi = data.iloc[i].area
-		yi = data.iloc[i].price
-		h_theta = theta1*xi + theta0
-		sumation = sumation + (h_theta - yi)**2
+def gradient_descent(x, y, iterations, alpha):
+	m_curr = b_curr = 0
+	n = len(x) # should be same length as y
 
-	return (1/(2*n)) * sumation
+	plt.xlabel('x-axis')
+	plt.ylabel('y-axis')
+	plt.title('Gradient Descent, alpha: {}, iterations: {}'.format(alpha, iterations))
+	plt.scatter(x, y, color='red', marker='+')
 
-# create csv file for training data
-with open('data.csv', 'w', newline='') as f:
-	thewriter = csv.writer(f)
-	thewriter.writerow(['area', 'price'])
-	thewriter.writerow([26, 550])
-	thewriter.writerow([30, 565])
-	thewriter.writerow([32, 610])
-	thewriter.writerow([36, 680])
-	thewriter.writerow([40, 725])
+	for i in range(iterations):
+		y_predicted = m_curr*x + b_curr
 
-# read csv file
-data = pd.read_csv('data.csv')
+		plt.plot(x, y_predicted, color='blue')
 
-# plot data
-# print('\n[+] Showing plot...')
-# plt.xlabel('area (sqr ft)')
-# plt.ylabel('price (US$)')
-# plt.title('Housing Price Training Fit')
-# plt.scatter(data.area, data.price, color='red', marker='+')
-# plt.show()
+		cost = (1/n) * sum([val**2 for val in (y - y_predicted)])
+		bd = -(2/n) * sum((y - y_predicted)) # derivative of b
+		md = -(2/n) * sum((y - y_predicted) * x) # derivative of m
+		m_curr = m_curr - alpha * md # update m
+		b_curr = b_curr - alpha * bd # update b
+		
+		print('m {}, b {}, cost {}, iterations {}'.format(m_curr,b_curr,cost,i))
 
-# creating coordinates for J(theta0, theta1)
-x = np.linspace(0,600000,15)
-y = []
-for i in range(1,30,2):
-	y.append(int(cost(data,150,i)))
+	plt.plot(x, y_predicted, color='red')
+	plt.show()
 
-plt.title('Cost Function')
-plt.xlabel('Theta1')
-plt.ylabel('J(theta1)')
-plt.plot(x, y, color='blue')
-plt.plot(x[1],y[1],'ro') 
-plt.show()
+x = np.array([1,2,3,4,5])
+y = np.array([5,7,9,11,13])
+
+gradient_descent(x, y, 100, 0.001)
+gradient_descent(x, y, 100, 0.01)
+gradient_descent(x, y, 100, 0.08)

@@ -32,15 +32,15 @@ for weights in weightsList:
 	y = m*x + b
 
 	# cost function --> (1/2n)sum_from_1_to_n(h_theta_i - yi)^2
-	sumation = 0
+	summation = 0
 	n = len(data)
 	for i in range(n):
 		xi = data.iloc[i].area
 		yi = data.iloc[i].price
 		h_theta = m*xi + b
-		sumation = sumation + (h_theta - yi)**2
+		summation = summation + (h_theta - yi)**2
 
-	cost = (1/(2*n)) * sumation
+	cost = (1/(2*n)) * summation
 	print('\n[+] m = ' + str(m) + ', b = ' + str(b))
 	print('[+] Cost function result --> ' + str(cost))
 
